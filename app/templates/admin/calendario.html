@@ -1,0 +1,62 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Calendario de Citas{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-2 md:px-8 py-8 md:py-12">
+    <h1 class="font-headline-xl text-primary mb-6 md:mb-8 text-xl md:text-3xl">Calendario</h1>
+    
+    <!-- Navegación -->
+    <div class="flex justify-between items-center mb-4 md:mb-6">
+        <a href="?year={{ prev_year }}&month={{ prev_month }}" class="text-primary font-headline-md flex items-center gap-1 hover:text-amber-300 transition-colors p-2 rounded-lg hover:bg-stone-800">
+            <span class="material-symbols-outlined">chevron_left</span>
+            <span class="hidden md:inline text-sm">Mes anterior</span>
+        </a>
+        <h2 class="font-headline-md text-lg md:text-xl">{{ year }}/{{ '%02d' % month }}</h2>
+        <a href="?year={{ next_year }}&month={{ next_month }}" class="text-primary font-headline-md flex items-center gap-1 hover:text-amber-300 transition-colors p-2 rounded-lg hover:bg-stone-800">
+            <span class="hidden md:inline text-sm">Mes siguiente</span>
+            <span class="material-symbols-outlined">chevron_right</span>
+        </a>
+    </div>
+
+    <!-- Días de la semana -->
+    <div class="grid grid-cols-7 gap-1 text-center mb-1 md:mb-2">
+        {% for day in ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'] %}
+        <div class="font-label-caps text-on-surface-variant text-[10px] md:text-xs py-1">{{ day }}</div>
+        {% endfor %}
+    </div>
+
+    <!-- Grid del calendario -->
+    <div class="grid grid-cols-7 gap-1">
+        {% for date, citas in calendar.items() %}
+        {% set weekday = date.weekday() %}
+        {% if loop.first %}
+        {% for _ in range(weekday) %}<div class="min-h-[60px] md:h-24 bg-surface-container-low rounded-sm"></div>{% endfor %}
+        {% endif %}
+        
+        <div class="min-h-[60px] md:h-24 bg-surface-container border border-outline-variant/30 p-1 overflow-hidden rounded-sm relative">
+            <div class="text-xs md:text-sm font-bold {% if date == today %}text-primary bg-primary/10 w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-full{% else %}text-on-surface{% endif %}">
+                {{ date.day }}
+            </div>
+            
+            <!-- Citas: en móvil mostramos máximo 1 + contador -->
+            <div class="mt-1 space-y-0.5">
+                {% if citas %}
+                    {% for cita in citas[:1] %}
+                    <div class="text-[9px] md:text-[10px] bg-primary/20 text-primary px-1 rounded truncate leading-tight">
+                        {{ cita.time.strftime('%H:%M') }} {{ cita.client_name.split()[0] }}
+                    </div>
+                    {% endfor %}
+                    {% if citas|length > 1 %}
+                    <div class="text-[9px] text-stone-500 px-1">+{{ citas|length - 1 }} más</div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if loop.last %}
+        {% set last_weekday = date.weekday() %}
+        {% for _ in range(6 - last_weekday) %}<div class="min-h-[60px] md:h-24 bg-surface-container-low rounded-sm"></div>{% endfor %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

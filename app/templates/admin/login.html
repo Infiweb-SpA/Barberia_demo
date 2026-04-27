@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <title>Admin Login - Heritage & Steel</title>
+    <style>
+        body { background-color: #131313; color: #e5e2e1; font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-background">
+    <div class="w-full max-w-md p-8 bg-surface-container rounded-lg shadow-2xl border border-stone-800">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-serif font-bold text-amber-500">Heritage & Steel</h1>
+            <p class="text-stone-400 mt-2">Panel de Administración</p>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="space-y-2 mb-4">
+            {% for category, message in messages %}
+            <div class="p-3 rounded {% if category == 'danger' %}bg-red-900/50 text-red-300 border border-red-700{% else %}bg-blue-900/50 text-blue-300 border border-blue-700{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" class="space-y-6">
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-stone-400 mb-2">Usuario</label>
+                <input name="username" type="text" required class="w-full bg-surface border-b-2 border-stone-700 focus:border-amber-500 outline-none py-3 px-2 text-on-background" placeholder="admin" />
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-stone-400 mb-2">Contraseña</label>
+                <input name="password" type="password" required class="w-full bg-surface border-b-2 border-stone-700 focus:border-amber-500 outline-none py-3 px-2 text-on-background" placeholder="••••••••" />
+            </div>
+            <button type="submit" class="w-full py-3 bg-amber-500 text-black font-bold uppercase tracking-wider hover:bg-amber-400 transition active:scale-95">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>

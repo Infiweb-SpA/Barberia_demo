@@ -1,0 +1,19 @@
+<footer class="bg-stone-950 border-t border-stone-800 py-8 px-4 md:px-8 pb-28 md:pb-8">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex flex-wrap justify-center gap-6">
+            <a class="font-serif text-sm text-stone-500 hover:text-stone-300 transition-colors" href="#">Privacidad</a>
+            <a class="font-serif text-sm text-stone-500 hover:text-stone-300 transition-colors" href="#">Términos</a>
+            <a class="font-serif text-sm text-stone-500 hover:text-stone-300 transition-colors" href="#">Instagram</a>
+            <a class="font-serif text-sm text-stone-500 hover:text-stone-300 transition-colors" href="#">Facebook</a>
+        </div>
+        
+        <!-- Admin visible tanto en móvil como desktop -->
+        <a href="{{ url_for('admin.login') }}"
+            class="font-serif text-sm text-stone-600 hover:text-amber-400 transition-colors flex items-center gap-1 px-3 py-1 rounded-lg border border-stone-800 hover:border-amber-500/30"
+            title="Panel de administración">
+            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+            <span>Admin</span>
+        </a>
+    </div>
+    <p class="text-center text-stone-700 text-xs mt-6 font-serif">© 2024 Heritage & Steel. Todos los derechos reservados.</p>
+</footer>

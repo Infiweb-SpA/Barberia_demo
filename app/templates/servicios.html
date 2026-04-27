@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Servicios - Heritage & Steel{% endblock %}
+{% block content %}
+<!-- Hero / Carousel Section: Tendencias de Color y Corte -->
+<section class="relative overflow-hidden py-16">
+    <div class="px-4 md:px-16 mb-8">
+        <h2 class="font-headline-xl text-primary mb-2">Tendencias 2024</h2>
+        <p class="font-body-lg text-on-surface-variant max-w-2xl">Cortes y estilos de teñido que definen el carácter urbano moderno.</p>
+    </div>
+    <div class="flex gap-6 overflow-x-auto px-4 md:px-16 custom-scrollbar pb-8">
+        <!-- Slide 1: Fade & Platinum -->
+        <div class="flex-none w-[300px] md:w-[450px] aspect-[4/5] relative group overflow-hidden border border-outline-variant">
+            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtT4n4en6Dmf8UYl0Q1WYeGRHwWeNSzU7-RgTTmTgUpD3vOZJTlfV5PqpKVxZmxFGZA76JViQlBHhtCQZI9kOxmasNXwQM-6lehxyDsBrnkt7Wq4V16FRTxkNSuO7Z9XissSTYLA8Lpw4cI4SM-pzLOP4ROfzCGPTGZr3biG0VUQmUo4HsJtsEgMgAgaS2aDblyPdI3hYz2gr_Tp0SBwllm1fcTnN0Fp4fu6XhbXylk9eDzW6Oxatq8zJCsdKDZFUJ3JrntZB33QY" />
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+            <div class="absolute bottom-6 left-6">
+                <span class="font-label-caps text-primary bg-background/80 px-3 py-1 mb-2 inline-block">Tendencia</span>
+                <h3 class="font-headline-md text-white">Platinum Blond &amp; Fade</h3>
+            </div>
+        </div>
+        <!-- Slide 2: Pompadour -->
+        <div class="flex-none w-[300px] md:w-[450px] aspect-[4/5] relative group overflow-hidden border border-outline-variant">
+            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKeT3dWyO0NwRsiaxZiMXYtN9V61lc4DiZPD-DLVaf4EAXbB-gvuxxV6iE_-u0cJUWYGSmEMBks9PYAYmzflgZm473BHZ6nK45e1Chk8xkAivHb7xTGhRycgqop-2te7FMJDzS1hvWbMEdf42bgnB2nft1_hwk92mYD8O4apY86CNzFIXhFQ4BU_V3h4NDQBY-w_ysRIw95H8lzimb3Pdv1pHDELTVbv2lbIAVOiK3f4EtP4c4NbHylGVXbjc71NQi0u9qaMgTrng" />
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+            <div class="absolute bottom-6 left-6">
+                <span class="font-label-caps text-primary bg-background/80 px-3 py-1 mb-2 inline-block">Clásico Moderno</span>
+                <h3 class="font-headline-md text-white">Pompadour Heritage</h3>
+            </div>
+        </div>
+        <!-- Slide 3: Urban Dye -->
+        <div class="flex-none w-[300px] md:w-[450px] aspect-[4/5] relative group overflow-hidden border border-outline-variant">
+            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3wAbupDb-L-V1h4CneYO0vML0a-e6Aje3MmjSA49mRxPIdl5is6MH9h-EXKJx7reig37gODuc06Jdd7PuKeqTPF7-4lf9-l71iXN9JADhw-_1Pro6hk8jGe0_kKLEa3ruiFGe0tp-3TKjUYMc_YF69HpiqfBFIv9o76ZhmX5OeQaZWSobPwVrzFm0RDkvw6vGNtXPzgZx2PRgvdm8kIMiysnGzerkiO1CHQoYJ-6Ue4V3TL4H_KgU_1c8e7lTpNdD0bwuPulQUro" />
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+            <div class="absolute bottom-6 left-6">
+                <span class="font-label-caps text-primary bg-background/80 px-3 py-1 mb-2 inline-block">Teñido Urbano</span>
+                <h3 class="font-headline-md text-white">Neon Steel Accents</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Menu Section -->
+<section class="py-20 px-4 md:px-16 bg-surface-container-low">
+    <div class="max-w-container-max mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+                <h2 class="font-headline-lg text-primary mb-12 border-b border-primary/20 pb-4">Menú de Grooming</h2>
+                <div class="space-y-10">
+                    {% set categories = {} %}
+                    {% for s in services %}
+                        {% set cat = s.category if s.category else 'Otros' %}
+                        {% if cat not in categories %}
+                            {% set _ = categories.update({cat: []}) %}
+                        {% endif %}
+                        {% set _ = categories[cat].append(s) %}
+                    {% endfor %}
+                    {% for cat, items in categories.items() %}
+                    <div>
+                        <h3 class="font-label-caps text-on-surface-variant mb-6 tracking-[0.2em] uppercase">{{ cat }}</h3>
+                        <div class="space-y-4">
+                            {% for service in items %}
+                            <div class="flex justify-between items-end border-b border-outline-variant pb-2 group cursor-pointer">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-on-surface group-hover:text-primary transition-colors">{{ service.name }}</span>
+                                    <span class="font-body-md text-on-surface-variant">{{ service.description }}</span>
+                                </div>
+                                <span class="font-headline-md text-primary">${{ "%.2f"|format(service.price) }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Visual Accent Piece -->
+            <div class="hidden lg:block relative">
+                <div class="sticky top-32 h-[600px] w-full bg-surface-container border border-outline-variant inner-glow overflow-hidden">
+                    <img class="w-full h-full object-cover grayscale opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCahVZ-UEMFxnSLP2wBsiye2ZEXdwACXS9jFTSBZdpmvmJEh7vzlYFF64fVbDrORSHJYjjDRPEWVPFundje9vOMNOpna7zoahH2xeRK1dH0WYJcW4vPcjZv53BYJ5rTnxCgmJI46g7Bhsd7_S01rmH14bCb3wFMSADi134ssiHI6xuWROTTbYXEX5O3Ry7_MabQxzaKxiCOxXM8wuC5ufODlxI1YIkqDCL54hoXTChlS65D9XzVvd_tO2GmErNGWXpjvGrLm68j-Sg" />
+                    <div class="absolute inset-0 p-12 flex flex-col justify-end">
+                        <h4 class="font-headline-lg text-primary mb-4 italic">El Arte del Acero</h4>
+                        <p class="font-body-lg text-on-background leading-relaxed">
+                            En Heritage &amp; Steel, cada trazo es una declaración de principios. No solo cortamos el cabello; esculpimos identidades con la precisión del acero y el respeto por la tradición.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Special Packages: Bento Grid Layout -->
+<section class="py-24 px-4 md:px-16">
+    <h2 class="font-headline-xl text-center text-primary mb-16">Paquetes Exclusivos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-container-max mx-auto">
+        <!-- Package 1 -->
+        <div class="bg-surface-container-high p-10 flex flex-col justify-between inner-glow border border-outline-variant relative overflow-hidden group">
+            <div class="relative z-10">
+                <span class="font-label-caps text-primary">EL CABALLERO COMPLETO</span>
+                <h3 class="font-headline-lg mt-4 mb-6">Master Ritual</h3>
+                <ul class="space-y-3 font-body-md text-on-surface-variant">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Corte Heritage</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Ritual de Barba</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Masaje Capilar</li>
+                </ul>
+            </div>
+            <div class="mt-12 flex justify-between items-center relative z-10">
+                <span class="font-headline-md text-primary">$60.00</span>
+                <a href="{{ url_for('public.reservas') }}" class="font-label-caps text-white border-b border-white pb-1 hover:text-primary hover:border-primary transition-colors">Seleccionar</a>
+            </div>
+            <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                <span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">content_cut</span>
+            </div>
+        </div>
+        <!-- Package 2 (Featured) -->
+        <div class="bg-primary text-on-primary p-10 flex flex-col justify-between border border-primary relative overflow-hidden shadow-[0_0_50px_rgba(242,202,80,0.15)] scale-105 z-10">
+            <div>
+                <span class="font-label-caps text-on-primary/70">MÁS SOLICITADO</span>
+                <h3 class="font-headline-lg mt-4 mb-6">Urban Platinum Package</h3>
+                <ul class="space-y-3 font-body-md">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span> Decoloración Platinum</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span> Fade de Especialidad</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span> Tratamiento Matizador</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span> Styling Premium</li>
+                </ul>
+            </div>
+            <div class="mt-12 flex justify-between items-center">
+                <span class="font-headline-md">$115.00</span>
+                <a href="{{ url_for('public.reservas') }}" class="bg-on-primary text-primary px-6 py-2 font-label-caps font-bold hover:bg-black transition-colors">Reservar Ahora</a>
+            </div>
+        </div>
+        <!-- Package 3 -->
+        <div class="bg-surface-container-high p-10 flex flex-col justify-between inner-glow border border-outline-variant relative overflow-hidden group">
+            <div class="relative z-10">
+                <span class="font-label-caps text-primary">EXPERIENCIA RÁPIDA</span>
+                <h3 class="font-headline-lg mt-4 mb-6">Quick Steel</h3>
+                <ul class="space-y-3 font-body-md text-on-surface-variant">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Perfilado de Barba</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Limpieza de Nuca</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Lavado Express</li>
+                </ul>
+            </div>
+            <div class="mt-12 flex justify-between items-center relative z-10">
+                <span class="font-headline-md text-primary">$35.00</span>
+                <a href="{{ url_for('public.reservas') }}" class="font-label-caps text-white border-b border-white pb-1 hover:text-primary hover:border-primary transition-colors">Seleccionar</a>
+            </div>
+            <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                <span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

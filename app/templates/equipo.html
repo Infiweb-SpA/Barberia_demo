@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Nuestro Equipo - Heritage & Steel{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<header class="max-w-[1280px] mx-auto px-4 md:px-8 mb-16 pt-12">
+    <div class="flex flex-col gap-4 max-w-2xl">
+        <span class="font-label-caps text-primary tracking-[0.2em]">EL EQUIPO</span>
+        <h1 class="font-headline-xl text-on-surface">Nuestros Maestros Barberos</h1>
+        <p class="font-body-lg text-on-surface-variant">Artesanos dedicados a la precisión del grooming tradicional. Cada uno de nuestros especialistas combina años de experiencia con las técnicas más refinadas de la barbería clásica.</p>
+    </div>
+</header>
+
+<!-- Barbers Bento/Grid -->
+<section class="max-w-[1280px] mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+    {% if barbers %}
+    <!-- Primer barbero: Large Featured (índice 0) -->
+    {% set featured = barbers[0] %}
+    <div class="md:col-span-8 bg-surface-container-low rounded-xl overflow-hidden inner-glow group">
+        <div class="grid md:grid-cols-2 h-full">
+            <div class="h-[400px] md:h-full relative overflow-hidden">
+                <img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" src="{{ featured.image_url }}" alt="{{ featured.name }}" />
+            </div>
+            <div class="p-10 flex flex-col justify-between bg-surface-container">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="font-label-caps text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">{{ featured.title.upper() }}</span>
+                    </div>
+                    <h2 class="font-headline-lg text-on-surface mb-2">{{ featured.name }}</h2>
+                    <p class="font-body-md text-on-surface-variant mb-6 italic">"{{ featured.specialty }}"</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary">content_cut</span>
+                            <div>
+                                <p class="font-label-caps text-tertiary">Especialidad</p>
+                                <p class="font-body-md">{{ featured.specialty }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary">history_edu</span>
+                            <div>
+                                <p class="font-label-caps text-tertiary">Experiencia</p>
+                                <p class="font-body-md">{{ featured.experience }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('public.reservas') }}?barber={{ featured.id }}" class="mt-8 border border-outline-variant text-on-surface py-3 px-6 font-label-caps hover:bg-primary hover:text-on-primary transition-all active:scale-95 text-center">RESERVAR CON {{ featured.name.split()[0].upper() }}</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resto de barberos en cards pequeñas -->
+    {% for barber in barbers[1:] %}
+    <div class="md:col-span-4 bg-surface-container-low rounded-xl overflow-hidden inner-glow flex flex-col group">
+        <div class="h-64 relative overflow-hidden">
+            <img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" src="{{ barber.image_url }}" alt="{{ barber.name }}" />
+        </div>
+        <div class="p-8 flex-grow bg-surface-container flex flex-col justify-between">
+            <div>
+                <span class="font-label-caps text-tertiary-container mb-2 block">{{ barber.title }}</span>
+                <h2 class="font-headline-md text-on-surface mb-4">{{ barber.name }}</h2>
+                <p class="font-body-md text-on-surface-variant mb-4">{{ barber.specialty }}</p>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-6">
+                <!-- Puedes extraer tags de la especialidad o agregar un campo -->
+                <span class="text-[10px] font-bold uppercase tracking-tighter border border-outline-variant px-2 py-1 rounded">Experto</span>
+            </div>
+            <a href="{{ url_for('public.reservas') }}?barber={{ barber.id }}" class="w-full border border-outline-variant text-on-surface py-3 px-6 font-label-caps hover:bg-primary hover:text-on-primary transition-all text-center">RESERVAR CITA</a>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Filosofía -->
+    <div class="md:col-span-8 bg-stone-900 rounded-xl overflow-hidden inner-glow relative group">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbhDu_eH5cBar210AGJy4w1prsTl1xT4wV1VnSK97g8OmSgnUVjvbFr775a0wt5A7myJqkHZUivup-Qjvulj0E9htXBYraEH8yyoYz3WlTcGLJOBNep4_u6rprpcSwhXndX3z5kHsa1e7T7Q2TCt4yxZQoHGUNSje4UFBzW5--wvadlf3v4ZpweAvZ3iU7SYv-Iig8KYXLrOOZ6nryZqjjVHE1bzZkUxxy_ySmJcaoNTK9LjXioHSODU9wFgFte2_TgSBz1wL8NNg" />
+        <div class="relative z-10 p-12 h-full flex flex-col justify-center max-w-xl">
+            <h3 class="font-headline-lg text-primary mb-4 italic">El Respeto por la Herramienta</h3>
+            <p class="font-body-lg text-on-background leading-relaxed">
+                En Heritage &amp; Steel, no solo cortamos el cabello; preservamos un legado. Cada herramienta es seleccionada por su peso, balance y capacidad de ofrecer un resultado impecable. Creemos que un buen barbero es, ante todo, un artesano del acero.
+            </p>
+        </div>
+    </div>
+    {% else %}
+    <p class="col-span-12 text-center text-on-surface-variant">Pronto presentaremos a nuestro equipo de maestros barberos.</p>
+    {% endif %}
+</section>
+
+<!-- Testimonial Mini Section -->
+<section class="max-w-[1280px] mx-auto px-4 md:px-8 mt-24">
+    <div class="bg-surface-container-high p-12 rounded-xl text-center border-t border-amber-500/20">
+        <span class="material-symbols-outlined text-amber-500 text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+        <p class="font-headline-md text-on-surface mb-8 italic">"Entrar aquí es viajar en el tiempo. Mateo entiende la anatomía de un afeitado perfecto como nadie más en la ciudad."</p>
+        <p class="font-label-caps text-tertiary tracking-widest">— FRANCISCO G., CLIENTE HABITUAL</p>
+    </div>
+</section>
+{% endblock %}

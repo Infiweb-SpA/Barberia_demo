@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% block title %}Reservar - Heritage & Steel{% endblock %}
+{% block head_extra %}
+<style>
+    .step-hidden { display: none; }
+    .step-active { display: block; }
+</style>
+{% endblock %}
+{% block content %}
+<section class="max-w-6xl mx-auto px-4 md:px-8 py-12">
+    <div class="mb-12">
+        <span class="font-label-caps text-primary uppercase tracking-widest">Experiencia Premium</span>
+        <h1 class="font-headline-xl text-on-background mb-4">Reserva tu Sesión</h1>
+        <p class="font-body-lg text-on-surface-variant max-w-2xl">Selecciona el arte que tu estilo merece. Precisión, tradición y el carácter del acero.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('public.reservas') }}" id="booking-form">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Columna izquierda: flujo de selección -->
+        <div class="lg:col-span-8 space-y-12">
+            <!-- Paso 1: Servicio -->
+            <div id="step1">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="w-8 h-8 rounded-full border border-primary flex items-center justify-center font-label-caps text-primary">01</span>
+                    <h2 class="font-headline-md">Selecciona un Servicio</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for service in services %}
+                    <div class="group relative bg-surface-container-high border border-outline-variant p-6 rounded-lg cursor-pointer service-card"
+                         data-id="{{ service.id }}" data-price="{{ service.price }}" data-duration="{{ service.duration }}" data-name="{{ service.name }}">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="material-symbols-outlined text-primary text-3xl">content_cut</span>
+                            <span class="font-headline-md text-primary">${{ "%.2f"|format(service.price) }}</span>
+                        </div>
+                        <h3 class="font-headline-md text-on-background group-hover:text-primary">{{ service.name }}</h3>
+                        <p class="font-body-md text-on-surface-variant mt-2">{{ service.description }}</p>
+                        <div class="mt-4 flex items-center gap-2 text-label-caps text-on-tertiary-fixed-variant uppercase">
+                            <span class="material-symbols-outlined text-sm">schedule</span>
+                            <span>{{ service.duration }} Min</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="service_id" id="service_id" value="">
+            </div>
+
+            <!-- Paso 2: Barbero -->
+            <div id="step2" class="step-hidden">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="w-8 h-8 rounded-full border border-primary flex items-center justify-center font-label-caps text-primary">02</span>
+                    <h2 class="font-headline-md">Elige a tu Barbero</h2>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    {% for barber in barbers %}
+                    <div class="text-center group cursor-pointer barber-card p-2 rounded-lg" data-id="{{ barber.id }}" data-name="{{ barber.name }}">
+                        <div class="w-24 h-24 rounded-full p-1 border-2 border-outline-variant mb-3 barber-img">
+                            <img class="w-full h-full object-cover rounded-full" src="{{ barber.image_url }}" alt="{{ barber.name }}"/>
+                        </div>
+                        <p class="font-label-caps text-on-background">{{ barber.name }}</p>
+                        <p class="text-[10px] text-primary uppercase font-bold">{{ barber.title }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="barber_id" id="barber_id" value="">
+            </div>
+
+            <!-- Paso 3: Fecha y hora -->
+            <div id="step3" class="step-hidden">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="w-8 h-8 rounded-full border border-primary flex items-center justify-center font-label-caps text-primary">03</span>
+                    <h2 class="font-headline-md">Fecha y Hora</h2>
+                </div>
+                <div class="bg-surface-container border border-outline-variant rounded-lg p-6">
+                    <div>
+                        <label class="font-label-caps text-on-surface-variant">Fecha:</label>
+                        <input type="date" name="date" id="date" class="bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary outline-none py-2 px-1 w-full" required>
+                    </div>
+                    <div class="mt-6" id="time-slots-container">
+                        <label class="font-label-caps text-on-surface-variant">Hora:</label>
+                        <div class="grid grid-cols-3 gap-2 mt-2" id="time-slots">
+                            <!-- Se cargará dinámicamente -->
+                        </div>
+                        <input type="hidden" name="time" id="time_slot" value="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 4: Datos personales -->
+            <div id="step4" class="step-hidden">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="w-8 h-8 rounded-full border border-primary flex items-center justify-center font-label-caps text-primary">04</span>
+                    <h2 class="font-headline-md">Tus Datos</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="font-label-caps text-on-surface-variant">Nombre Completo*</label>
+                        <input name="name" type="text" required class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary outline-none py-3 px-1">
+                    </div>
+                    <div>
+                        <label class="font-label-caps text-on-surface-variant">Email</label>
+                        <input name="email" type="email" class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary outline-none py-3 px-1">
+                    </div>
+                    <div>
+                        <label class="font-label-caps text-on-surface-variant">Teléfono*</label>
+                        <input name="phone" type="tel" required class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary outline-none py-3 px-1">
+                    </div>
+                    <div>
+                        <label class="font-label-caps text-on-surface-variant">Notas</label>
+                        <input name="notes" type="text" class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary outline-none py-3 px-1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación entre pasos -->
+            <div class="flex justify-between pt-8">
+                <button type="button" id="prev-btn" class="px-6 py-3 border border-outline-variant font-label-caps hover:bg-surface-container transition" disabled>Anterior</button>
+                <button type="button" id="next-btn" class="px-6 py-3 bg-primary text-on-primary font-label-caps hover:bg-primary-container transition">Siguiente</button>
+                <button type="submit" id="submit-btn" class="px-6 py-3 bg-primary text-on-primary font-label-caps hover:bg-primary-container transition hidden">Confirmar Cita</button>
+            </div>
+        </div>
+
+        <!-- Columna derecha: Resumen sticky -->
+        <div class="lg:col-span-4">
+            <div class="sticky top-28 bg-surface-container-high border border-outline p-8 rounded-lg shadow-2xl space-y-8">
+                <div>
+                    <h3 class="font-headline-lg text-primary mb-2">Resumen</h3>
+                    <p class="font-body-md text-on-surface-variant">Revisa los detalles antes de confirmar.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between"><span class="text-on-surface-variant text-xs uppercase">Servicio</span><span id="summary-service">-</span></div>
+                    <div class="flex justify-between"><span class="text-on-surface-variant text-xs uppercase">Barbero</span><span id="summary-barber">-</span></div>
+                    <div class="flex justify-between"><span class="text-on-surface-variant text-xs uppercase">Fecha</span><span id="summary-date">-</span></div>
+                    <div class="flex justify-between"><span class="text-on-surface-variant text-xs uppercase">Hora</span><span id="summary-time">-</span></div>
+                    <div class="flex justify-between"><span class="text-on-surface-variant text-xs uppercase">Duración</span><span id="summary-duration">-</span></div>
+                </div>
+                <div class="pt-6 border-t border-outline-variant">
+                    <div class="flex justify-between items-end">
+                        <span class="font-headline-md">Total</span>
+                        <span class="font-headline-xl text-primary" id="summary-price">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Manejo de pasos
+    let currentStep = 1;
+    const totalSteps = 4;
+    const form = document.getElementById('booking-form');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function showStep(step) {
+        for (let i = 1; i <= totalSteps; i++) {
+            document.getElementById('step' + i).classList.add('step-hidden');
+        }
+        document.getElementById('step' + step).classList.remove('step-hidden');
+        prevBtn.disabled = (step === 1);
+        if (step === totalSteps) {
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+        } else {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+        }
+    }
+    showStep(1);
+
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    });
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    });
+
+    // Selección de servicio
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('border-primary'));
+            this.classList.add('border-primary');
+            document.getElementById('service_id').value = this.dataset.id;
+            document.getElementById('summary-service').textContent = this.dataset.name;
+            document.getElementById('summary-duration').textContent = this.dataset.duration + ' min';
+            document.getElementById('summary-price').textContent = '$' + parseFloat(this.dataset.price).toFixed(2);
+        });
+    });
+
+    // Selección de barbero
+    document.querySelectorAll('.barber-card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.barber-card').forEach(c => c.querySelector('.barber-img').classList.remove('border-primary'));
+            this.querySelector('.barber-img').classList.add('border-primary');
+            document.getElementById('barber_id').value = this.dataset.id;
+            document.getElementById('summary-barber').textContent = this.dataset.name;
+            // Recargar horarios si ya hay fecha
+            if (document.getElementById('date').value) {
+                loadTimeSlots();
+            }
+        });
+    });
+
+    // Carga dinámica de horarios
+    document.getElementById('date').addEventListener('change', loadTimeSlots);
+
+    function loadTimeSlots() {
+        const date = document.getElementById('date').value;
+        const barberId = document.getElementById('barber_id').value;
+        if (!date || !barberId) return;
+        fetch(`/api/horarios_disponibles?date=${date}&barber_id=${barberId}`)
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('time-slots');
+                container.innerHTML = '';
+                document.getElementById('summary-date').textContent = date;
+                if (data.horarios.length === 0) {
+                    container.innerHTML = '<p class="text-on-surface-variant col-span-3">No hay horarios disponibles.</p>';
+                    return;
+                }
+                data.horarios.forEach(h => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = h;
+                    btn.className = 'py-2 px-3 border border-outline-variant text-xs hover:border-primary time-slot-btn';
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('bg-primary', 'text-on-primary'));
+                        this.classList.add('bg-primary', 'text-on-primary');
+                        document.getElementById('time_slot').value = h;
+                        document.getElementById('summary-time').textContent = h;
+                    });
+                    container.appendChild(btn);
+                });
+            });
+    }
+</script>
+{% endblock %}

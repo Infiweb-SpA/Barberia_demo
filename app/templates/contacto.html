@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Contacto - Heritage & Steel{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-[409px] md:h-[512px] flex items-center justify-center overflow-hidden">
+    <img class="absolute inset-0 w-full h-full object-cover opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu8btpJGT7fmZ37z-27JvPIN1O7A6sms8_w2-9RnGMxISiF1S0GRv37vIqjHTRMW55he3Wq6ZIg_WYEGKNaXO1NKBjf-_9Z9b7rwDvHHG3Vi4Aonj4ezN195oUEsg3U7SxYTrErOmWbchWFbB2QGu3VcIcVmky4O-xbadj0y1bUUuz-O66RmfDDWJpudvwgSZS5BC4q_7mVvKCnXzJ5KppNZUnypCw4PKKBn4_Pz7bG4HJ6IMgCpAQvK8WblfcO9x4HNKrKvMizIc" />
+    <div class="relative z-10 text-center px-4">
+        <h1 class="font-headline-xl text-primary mb-4">Contacto &amp; Ubicación</h1>
+        <p class="font-body-lg text-tertiary max-w-2xl mx-auto">Donde la precisión se encuentra con la tradición. Visítanos en el corazón de la ciudad.</p>
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</section>
+
+<!-- Main Content Grid -->
+<div class="max-w-[1280px] mx-auto px-4 md:px-16 grid grid-cols-1 md:grid-cols-12 gap-6 py-16">
+    <!-- Contact Info & Hours (Bento Style) -->
+    <div class="md:col-span-5 space-y-6">
+        <!-- Direct Contact Card -->
+        <div class="bg-surface-container p-8 rounded-lg inner-glow border border-primary/5">
+            <h2 class="font-headline-md text-primary mb-6">Información</h2>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary">location_on</span>
+                    <div>
+                        <p class="font-label-caps text-secondary mb-1">Dirección</p>
+                        <p class="font-body-md">Calle Acero 124, Barrio Histórico<br />Ciudad de México, CP 06000</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary">call</span>
+                    <div>
+                        <p class="font-label-caps text-secondary mb-1">Teléfono</p>
+                        <p class="font-body-md">+52 55 1234 5678</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary">mail</span>
+                    <div>
+                        <p class="font-label-caps text-secondary mb-1">Email</p>
+                        <p class="font-body-md">info@heritage-steel.com</p>
+                    </div>
+                </div>
+            </div>
+            <!-- WhatsApp CTA -->
+            <a class="mt-8 flex items-center justify-center gap-3 w-full py-4 bg-[#25D366] text-white rounded-lg font-label-caps hover:brightness-110 transition-all active:scale-[0.98]" href="https://wa.me/525512345678" target="_blank">
+                <span class="material-symbols-outlined">chat</span> Chat de WhatsApp
+            </a>
+        </div>
+        <!-- Hours Card -->
+        <div class="bg-surface-container-high p-8 rounded-lg border border-white/5">
+            <h2 class="font-headline-md text-primary mb-6">Horarios</h2>
+            <ul class="space-y-3 font-body-md">
+                <li class="flex justify-between border-b border-stone-800 pb-2"><span class="text-on-surface">Lunes - Viernes</span><span class="text-primary font-bold">10:00 - 20:00</span></li>
+                <li class="flex justify-between border-b border-stone-800 pb-2"><span class="text-on-surface">Sábado</span><span class="text-primary font-bold">09:00 - 18:00</span></li>
+                <li class="flex justify-between text-stone-500"><span>Domingo</span><span>Cerrado</span></li>
+            </ul>
+        </div>
+        <!-- Socials Card -->
+        <div class="bg-stone-900/50 p-6 rounded-lg flex justify-around items-center border border-primary/5">
+            <a class="text-stone-400 hover:text-primary transition-colors flex flex-col items-center gap-2" href="#">
+                <span class="material-symbols-outlined">photo_camera</span>
+                <span class="text-[10px] uppercase font-bold tracking-widest">Instagram</span>
+            </a>
+            <a class="text-stone-400 hover:text-primary transition-colors flex flex-col items-center gap-2" href="#">
+                <span class="material-symbols-outlined">social_leaderboard</span>
+                <span class="text-[10px] uppercase font-bold tracking-widest">Facebook</span>
+            </a>
+            <a class="text-stone-400 hover:text-primary transition-colors flex flex-col items-center gap-2" href="#">
+                <span class="material-symbols-outlined">video_library</span>
+                <span class="text-[10px] uppercase font-bold tracking-widest">TikTok</span>
+            </a>
+        </div>
+    </div>
+    <!-- Form & Map -->
+    <div class="md:col-span-7 space-y-6">
+        <!-- Contact Form -->
+        <div class="bg-surface p-8 md:p-10 rounded-lg border border-stone-800 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+            <h2 class="font-headline-md text-on-background mb-2">Envíanos un mensaje</h2>
+            <p class="font-body-md text-stone-400 mb-8">Consultas especiales, eventos o simplemente para saludar.</p>
+            <form method="POST" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="font-label-caps text-secondary text-[10px] uppercase">Nombre Completo</label>
+                        <input name="name" class="w-full bg-surface-container border-none border-b-2 border-stone-800 focus:border-primary focus:ring-0 text-on-background py-3 transition-colors" placeholder="Ej: Julian Martinez" type="text" required />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-label-caps text-secondary text-[10px] uppercase">Correo Electrónico</label>
+                        <input name="email" class="w-full bg-surface-container border-none border-b-2 border-stone-800 focus:border-primary focus:ring-0 text-on-background py-3 transition-colors" placeholder="julian@ejemplo.com" type="email" required />
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="font-label-caps text-secondary text-[10px] uppercase">Asunto</label>
+                    <select name="subject" class="w-full bg-surface-container border-none border-b-2 border-stone-800 focus:border-primary focus:ring-0 text-on-background py-3 appearance-none">
+                        <option>Cita Especial</option>
+                        <option>Feedback de Servicio</option>
+                        <option>Eventos &amp; Prensa</option>
+                        <option>Otros</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="font-label-caps text-secondary text-[10px] uppercase">Mensaje</label>
+                    <textarea name="message" class="w-full bg-surface-container border-none border-b-2 border-stone-800 focus:border-primary focus:ring-0 text-on-background py-3 transition-colors resize-none" placeholder="¿En qué podemos ayudarte?" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="bg-primary-container text-on-primary-container px-10 py-4 font-label-caps uppercase w-full md:w-auto hover:bg-primary transition-all active:scale-95">Enviar Mensaje</button>
+            </form>
+        </div>
+        <!-- Interactive Map Placeholder -->
+        <div class="relative h-[400px] rounded-lg overflow-hidden border border-stone-800 grayscale contrast-125 hover:grayscale-0 transition-all duration-700">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoftH7EGz2zWjK6B593rQDTh-VSf2QpqNJWF4T2TqqSARC5cfosn1UK055jycIoynywoTOlGzYs4kcttme8JAm3Svh06pbHO6ghw5enLxsv5JwsHFcueciN5lIbGbqO-E4ehTLWMlIHGU2UiXAm8r_vLfk_SbySqO5ZmID1kLpwSv6K60aToXMko_o1m4WYvcB5bxTsurcUdS4DhTw8Jr9LBvsrkVdAD_NVzGrpSDDLOLjxEFEI33OQsM3K8UNEEoMO8bjCkSbKkw" />
+            <div class="absolute bottom-6 left-6 bg-stone-950 p-4 border border-primary/30 rounded-lg shadow-2xl flex items-center gap-4">
+                <div class="w-12 h-12 rounded bg-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-primary">directions</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-primary text-[10px]">VER EN GOOGLE MAPS</p>
+                    <p class="font-body-md text-white font-bold">Cómo llegar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

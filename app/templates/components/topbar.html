@@ -1,0 +1,87 @@
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 md:px-8 h-16 md:h-20 bg-stone-950/95 backdrop-blur-md border-b border-stone-800 shadow-2xl">
+    <a href="{{ url_for('public.inicio') }}" class="text-lg md:text-xl font-serif font-bold text-amber-500 tracking-tighter">Heritage &amp; Steel</a>
+    
+    <!-- Navegación desktop -->
+    <nav class="hidden md:flex items-center gap-8">
+        <a href="{{ url_for('public.inicio') }}" class="font-serif tracking-wide uppercase text-xs {% if request.path == url_for('public.inicio') %}text-amber-500 border-b border-amber-500 pb-1{% else %}text-stone-400 hover:text-amber-200{% endif %} transition-colors duration-300">Inicio</a>
+        <a href="{{ url_for('public.servicios') }}" class="font-serif tracking-wide uppercase text-xs {% if request.path == url_for('public.servicios') %}text-amber-500 border-b border-amber-500 pb-1{% else %}text-stone-400 hover:text-amber-200{% endif %} transition-colors duration-300">Servicios</a>
+        <a href="{{ url_for('public.equipo') }}" class="font-serif tracking-wide uppercase text-xs {% if request.path == url_for('public.equipo') %}text-amber-500 border-b border-amber-500 pb-1{% else %}text-stone-400 hover:text-amber-200{% endif %} transition-colors duration-300">Barberos</a>
+        <a href="{{ url_for('public.contacto') }}" class="font-serif tracking-wide uppercase text-xs {% if request.path == url_for('public.contacto') %}text-amber-500 border-b border-amber-500 pb-1{% else %}text-stone-400 hover:text-amber-200{% endif %} transition-colors duration-300">Contacto</a>
+        <a href="{{ url_for('public.reservas') }}" class="bg-primary text-on-primary px-6 py-2 font-label-caps uppercase text-xs active:scale-95 duration-200 shadow-lg shadow-primary/20">Reservar</a>
+    </nav>
+
+    <!-- Botón hamburguesa móvil -->
+    <button class="md:hidden flex items-center justify-center w-10 h-10 bg-stone-900 rounded-lg border border-stone-700 text-amber-500 shadow-lg active:scale-95 transition-all" id="mobile-menu-toggle" aria-label="Abrir menú">
+        <span class="material-symbols-outlined transition-transform duration-300" id="menu-icon">menu</span>
+    </button>
+</header>
+
+<!-- Menú móvil desplegable -->
+<div id="mobile-menu" class="md:hidden fixed top-16 left-4 right-4 bg-stone-950/98 backdrop-blur-xl border border-stone-800 rounded-xl shadow-2xl z-40 opacity-0 -translate-y-4 pointer-events-none transition-all duration-300 ease-out overflow-hidden">
+    <nav class="flex flex-col p-2">
+        <a href="{{ url_for('public.inicio') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-serif uppercase text-sm {% if request.path == url_for('public.inicio') %}text-amber-500 bg-amber-500/10{% else %}text-stone-300 hover:bg-stone-800 hover:text-amber-200{% endif %} transition-colors">
+            <span class="material-symbols-outlined text-lg">home</span> Inicio
+        </a>
+        <a href="{{ url_for('public.servicios') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-serif uppercase text-sm {% if request.path == url_for('public.servicios') %}text-amber-500 bg-amber-500/10{% else %}text-stone-300 hover:bg-stone-800 hover:text-amber-200{% endif %} transition-colors">
+            <span class="material-symbols-outlined text-lg">content_cut</span> Servicios
+        </a>
+        <a href="{{ url_for('public.equipo') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-serif uppercase text-sm {% if request.path == url_for('public.equipo') %}text-amber-500 bg-amber-500/10{% else %}text-stone-300 hover:bg-stone-800 hover:text-amber-200{% endif %} transition-colors">
+            <span class="material-symbols-outlined text-lg">groups</span> Barberos
+        </a>
+        <a href="{{ url_for('public.contacto') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-serif uppercase text-sm {% if request.path == url_for('public.contacto') %}text-amber-500 bg-amber-500/10{% else %}text-stone-300 hover:bg-stone-800 hover:text-amber-200{% endif %} transition-colors">
+            <span class="material-symbols-outlined text-lg">mail</span> Contacto
+        </a>
+        <div class="border-t border-stone-800 my-1"></div>
+        <a href="{{ url_for('public.reservas') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-amber-400 font-serif uppercase text-sm hover:bg-primary/20 transition-colors border border-primary/20 mx-2 mb-1">
+            <span class="material-symbols-outlined text-lg">calendar_month</span> Reservar Cita
+        </a>
+        <a href="{{ url_for('admin.login') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-stone-500 font-serif uppercase text-sm hover:bg-stone-800 hover:text-amber-300 transition-colors">
+            <span class="material-symbols-outlined text-lg">admin_panel_settings</span> Panel Admin
+        </a>
+    </nav>
+</div>
+
+<!-- Overlay para cerrar al tocar fuera -->
+<div id="mobile-menu-overlay" class="md:hidden fixed inset-0 bg-black/40 z-30 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+<script>
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('mobile-menu-overlay');
+    const menuIcon = document.getElementById('menu-icon');
+    let isOpen = false;
+
+    function toggleMenu() {
+        isOpen = !isOpen;
+        if (isOpen) {
+            mobileMenu.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+            mobileMenu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            menuOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            menuIcon.textContent = 'close';
+        } else {
+            mobileMenu.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+            mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+            menuOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            menuIcon.textContent = 'menu';
+        }
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    // Cerrar al tocar un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', toggleMenu);
+    });
+
+    // Cerrar al hacer scroll
+    window.addEventListener('scroll', () => {
+        if (isOpen) toggleMenu();
+    });
+</script>

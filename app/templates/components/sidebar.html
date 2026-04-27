@@ -1,0 +1,77 @@
+<!-- Barra lateral fija + overlay para móvil -->
+<aside id="sidebar"
+       class="fixed inset-y-0 left-0 z-50 w-64 bg-stone-950 border-r border-stone-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col">
+    <!-- Logo o marca -->
+    <div class="p-6 border-b border-stone-800">
+        <a href="{{ url_for('public.inicio') }}" class="text-xl font-serif font-bold text-amber-500 tracking-tighter">Heritage &amp; Steel</a>
+    </div>
+
+    <!-- Navegación principal -->
+    <nav class="flex-1 flex flex-col gap-1 p-4">
+        <a href="{{ url_for('public.inicio') }}"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-serif uppercase tracking-wider
+                  {% if request.path == url_for('public.inicio') %}text-amber-400 bg-amber-500/10{% else %}text-stone-400 hover:bg-stone-800 hover:text-amber-200{% endif %} transition">
+            <span class="material-symbols-outlined">home</span> Inicio
+        </a>
+        <a href="{{ url_for('public.servicios') }}"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-serif uppercase tracking-wider
+                  {% if request.path == url_for('public.servicios') %}text-amber-400 bg-amber-500/10{% else %}text-stone-400 hover:bg-stone-800 hover:text-amber-200{% endif %} transition">
+            <span class="material-symbols-outlined">content_cut</span> Servicios
+        </a>
+        <a href="{{ url_for('public.equipo') }}"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-serif uppercase tracking-wider
+                  {% if request.path == url_for('public.equipo') %}text-amber-400 bg-amber-500/10{% else %}text-stone-400 hover:bg-stone-800 hover:text-amber-200{% endif %} transition">
+            <span class="material-symbols-outlined">groups</span> Barberos
+        </a>
+        <a href="{{ url_for('public.contacto') }}"
+           class="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-serif uppercase tracking-wider
+                  {% if request.path == url_for('public.contacto') %}text-amber-400 bg-amber-500/10{% else %}text-stone-400 hover:bg-stone-800 hover:text-amber-200{% endif %} transition">
+            <span class="material-symbols-outlined">mail</span> Contacto
+        </a>
+        <a href="{{ url_for('public.reservas') }}"
+           class="mt-4 flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-serif uppercase tracking-wider
+                  bg-primary/10 border border-primary/30 text-amber-400 hover:bg-primary/20 transition">
+            <span class="material-symbols-outlined">calendar_month</span> Reservar
+        </a>
+    </nav>
+
+    <!-- Pie del sidebar -->
+    <div class="p-4 border-t border-stone-800 text-xs text-stone-500 flex items-center gap-2">
+        <span class="material-symbols-outlined text-base">admin_panel_settings</span>
+        <a href="{{ url_for('admin.login') }}" class="hover:text-amber-300 transition">Panel Admin</a>
+    </div>
+</aside>
+
+<!-- Overlay para cerrar el menú en móvil -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden" onclick="closeSidebar()"></div>
+
+<!-- Botón de hamburguesa (solo móvil) -->
+<button id="sidebar-toggle"
+        class="md:hidden fixed top-4 left-4 z-50 p-2 bg-stone-900 rounded border border-stone-700 text-amber-400">
+    <span class="material-symbols-outlined">menu</span>
+</button>
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const toggleBtn = document.getElementById('sidebar-toggle');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebar.classList.toggle('translate-x-0');
+        overlay.classList.toggle('hidden');
+    });
+
+    function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+    }
+
+    // Cerrar al hacer clic en un enlace del sidebar en móvil
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 768) closeSidebar();
+        });
+    });
+</script>

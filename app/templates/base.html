@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <title>{% block title %}Heritage & Steel{% endblock %}</title>
+    {% block head_extra %}{% endblock %}
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-background": "#e5e2e1",
+                        "tertiary-container": "#b4b2b2",
+                        "secondary": "#ffe2ab",
+                        "primary": "#f2ca50",
+                        "surface-container": "#201f1f",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        // ... (mantener paleta original)
+                    },
+                    fontFamily: {
+                        "headline-xl": ["Noto Serif"],
+                        "body-md": ["Manrope"],
+                    },
+                    // ... otras configuraciones
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .inner-glow { box-shadow: inset 0 0 0 1px rgba(242, 202, 80, 0.1); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+    {% include 'components/topbar.html' %}
+    <main class="pt-20 pb-24 md:pb-0">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="max-w-6xl mx-auto px-4 mt-4">
+            {% for category, message in messages %}
+            <div class="p-4 mb-4 rounded border {% if category == 'success' %}bg-green-900 border-green-700 text-green-200{% else %}bg-red-900 border-red-700 text-red-200{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    {% include 'components/footer.html' %}
+    {% include 'components/bottom_navbar.html' %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>
